@@ -10,3 +10,6 @@ web/dist/
 # OS / editor
 .DS_Store
 Thumbs.db
+
+# Temporary result artifacts
+results/_tmp*
