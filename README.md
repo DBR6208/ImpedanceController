@@ -15,9 +15,9 @@ This repo is a compact research-artifact style demonstration of Week 6 robotic c
 ## Spring-Mass-Damper Formulation (Grader Quick Check)
 This demo is directly built around the task-space impedance law:
 
-\[
-M\ddot{x} + D(\dot{x}-\dot{x}_{ref}) + K(x-x_{ref}) = F_{contact}
-\]
+```text
+M * x_ddot + D * (x_dot - x_ref_dot) + K * (x - x_ref) = F_contact
+```
 
 Where:
 - `x` is peg lateral position (alignment state), `x_ref` is the insertion reference path
