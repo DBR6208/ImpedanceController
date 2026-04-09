@@ -19,35 +19,35 @@ Target behavior:
 ## 2) Core dynamics model
 The commanded task-space dynamics follow a diagonal spring-mass-damper structure:
 
-\[
-M \ddot{x} + D \dot{x} + K(x - x_{\text{ref}}) = F_{\text{contact}} + w
-\]
+```text
+M * x_ddot + D * x_dot + K * (x - x_ref) = F_contact + w
+```
 
 where:
-- \(x = [x, y, z]^T\): peg position
-- \(x_{\text{ref}}\): insertion trajectory reference
-- \(M, D, K\): virtual mass, damping, stiffness (diagonal in this demo)
-- \(F_{\text{contact}}\): contact reaction force from hole/plate
-- \(w\): force noise term (Gaussian, deterministic seed for reproducibility)
+- `x = [x, y, z]^T`: peg position
+- `x_ref`: insertion trajectory reference
+- `M, D, K`: virtual mass, damping, stiffness (diagonal in this demo)
+- `F_contact`: contact reaction force from hole/plate
+- `w`: force noise term (Gaussian, deterministic seed for reproducibility)
 
 The controller command used in simulation is:
 
-\[
-F_{\text{cmd}} = -K(x - x_{\text{ref}}) - D \dot{x}
-\]
+```text
+F_cmd = -K * (x - x_ref) - D * x_dot
+```
 
 and total force is:
 
-\[
-F_{\text{total}} = F_{\text{cmd}} + F_{\text{contact}} + w
-\]
+```text
+F_total = F_cmd + F_contact + w
+```
 
 ## 3) Reference trajectory
 The reference keeps XY fixed at the initial offset and drives Z downward at constant speed until a target depth:
 
-\[
-z_{\text{ref}}(t) = \max(z_{\text{target}}, z_0 - v_{\text{insert}} t)
-\]
+```text
+z_ref(t) = max(z_target, z0 - v_insert * t)
+```
 
 This is intentionally simple so contact behavior dominates the comparison.
 
@@ -55,28 +55,28 @@ This is intentionally simple so contact behavior dominates the comparison.
 Contact is modeled with radial and vertical penalties around the hole geometry.
 
 Definitions:
-- clearance: \(c = r_{\text{hole}} - r_{\text{peg}}\)
-- radial distance: \(r = \sqrt{x^2 + y^2}\)
-- radial penetration: \(p_r = \max(0, r - c)\)
-- top-plane penetration: \(p_z = \max(0, z_{\text{plate}} - z)\)
+- clearance: `c = r_hole - r_peg`
+- radial distance: `r = sqrt(x^2 + y^2)`
+- radial penetration: `p_r = max(0, r - c)`
+- top-plane penetration: `p_z = max(0, z_plate - z)`
 
-When \(p_r > 0\) and \(p_z > 0\), lateral inward force magnitude includes:
+When `p_r > 0` and `p_z > 0`, lateral inward force magnitude includes:
 - radial stiffness term
 - radial damping term
-- extra centering term proportional to \(p_r p_z\)
+- extra centering term proportional to `p_r * p_z`
 
-That centering term emulates the “funnel/self-guiding” effect after rim contact.
+That centering term emulates the "funnel/self-guiding" effect after rim contact.
 
 A bottom-stop penalty is also applied near hole bottom depth.
 
 ## 5) Numerical integration
 Simulation uses fixed-step semi-implicit Euler:
 
-1. \(\dot{x}_{k+1} = \dot{x}_k + \Delta t \, M^{-1} F_{\text{total},k}\)
-2. \(x_{k+1} = x_k + \Delta t \, \dot{x}_{k+1}\)
+1. `x_dot[k+1] = x_dot[k] + dt * inv(M) * F_total[k]`
+2. `x[k+1] = x[k] + dt * x_dot[k+1]`
 
 Why semi-implicit Euler:
-- stable for damped mechanical systems at small fixed \(\Delta t\)
+- stable for damped mechanical systems at small fixed `dt`
 - deterministic and simple for pedagogical comparison
 - no hidden state mutation outside the plant step
 
@@ -87,9 +87,10 @@ Insertion success at a time step is declared when both hold:
 
 In symbols:
 
-\[
-\sqrt{x^2+y^2} \le \alpha c,\quad z \le z_{\text{plate}} - d_{\text{success}}
-\]
+```text
+sqrt(x^2 + y^2) <= alpha * c
+z <= z_plate - d_success
+```
 
 Primary comparison metrics:
 - peak contact force
