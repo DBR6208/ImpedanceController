@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Impedance Alignment Demo</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="hero">
+        <p class="eyebrow">Robotics Control Demo</p>
+        <h1>Impedance-Controlled Peg Alignment</h1>
+        <p class="subtitle">
+          Stiff control collides and spikes force. Impedance control absorbs contact,
+          self-centers, and inserts.
+        </p>
+      </header>
+
+      <section class="workspace">
+        <aside class="left-pane">
+          <section class="control-bar">
+            <div class="control-group">
+              <label for="view-mode">View</label>
+              <select id="view-mode">
+                <option value="split">Split (Stiff vs Impedance)</option>
+                <option value="stiff">Stiff Only</option>
+                <option value="impedance">Impedance Only</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="stiffness-scale">Stiffness Scale</label>
+              <input id="stiffness-scale" type="range" min="0.6" max="1.8" step="0.05" value="1.0" />
+              <span id="stiffness-scale-value" class="mono">1.00</span>
+            </div>
+            <div class="control-group">
+              <label for="damping-scale">Damping Scale</label>
+              <input id="damping-scale" type="range" min="0.5" max="2.4" step="0.05" value="1.0" />
+              <span id="damping-scale-value" class="mono">1.00</span>
+            </div>
+            <div class="control-group">
+              <label for="noise-std">Noise [N]</label>
+              <input id="noise-std" type="range" min="0.0" max="0.3" step="0.01" value="0.1" />
+              <span id="noise-std-value" class="mono">0.10</span>
+            </div>
+            <div class="control-group buttons">
+              <button id="btn-play-pause" type="button">Pause</button>
+              <button id="btn-reset" type="button">Reset</button>
+            </div>
+          </section>
+
+          <article class="plot-card left-heatmap-card">
+            <h2>Success Heatmap</h2>
+            <canvas id="plot-heatmap" width="420" height="360"></canvas>
+          </article>
+        </aside>
+
+        <section class="middle-pane">
+          <section class="stage" id="stage">
+            <div id="scene-host" class="scene-host"></div>
+            <div class="split-divider"></div>
+            <div class="panel-tag panel-tag-left">Stiff</div>
+            <div class="panel-tag panel-tag-right">Impedance</div>
+            <div class="inset inset-left">
+              <canvas id="topdown-left" width="180" height="130"></canvas>
+            </div>
+            <div class="inset inset-right">
+              <canvas id="topdown-right" width="180" height="130"></canvas>
+            </div>
+          </section>
+
+          <section class="controller-diagram-panel">
+            <h2>Controller Block Diagram</h2>
+            <img src="/diagrams/controller_block.svg" alt="Controller block diagram" />
+          </section>
+
+          <section class="timeline-bar">
+            <label for="timeline">Timeline</label>
+            <input id="timeline" type="range" min="0" max="2" step="0.001" value="0" />
+            <span id="time-label" class="mono">0.000 s</span>
+          </section>
+
+          <section class="status-strip">
+            <div id="status-left" class="status-card">Stiff: --</div>
+            <div id="status-right" class="status-card">Impedance: --</div>
+          </section>
+        </section>
+
+        <aside class="right-pane">
+          <section class="plots-grid">
+            <article class="plot-card">
+              <h2>Force vs Time</h2>
+              <canvas id="plot-force" width="720" height="280"></canvas>
+            </article>
+            <article class="plot-card">
+              <h2>Center Error vs Time</h2>
+              <canvas id="plot-error" width="720" height="280"></canvas>
+            </article>
+            <article class="plot-card">
+              <h2>Stiffness Sweep</h2>
+              <canvas id="plot-stiffness" width="720" height="320"></canvas>
+            </article>
+            <article class="plot-card">
+              <h2>Damping Sweep</h2>
+              <canvas id="plot-damping" width="720" height="320"></canvas>
+            </article>
+          </section>
+        </aside>
+      </section>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

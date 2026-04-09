@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Node / Vite
+web/node_modules/
+web/dist/
+
+# OS / editor
+.DS_Store
+Thumbs.db

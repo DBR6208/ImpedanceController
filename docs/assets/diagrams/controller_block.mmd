@@ -1,0 +1,9 @@
+flowchart LR
+  A["Reference Trajectory<br/>x_ref(t)"] --> B["Impedance Law<br/>F_cmd = -K(x-x_ref) - D*x_dot"]
+  G["Mode Preset<br/>Stiff or Impedance"] --> B
+  B --> C["Plant + Integrator<br/>M*x_ddot = F_cmd + F_contact + w"]
+  C --> D["State Feedback<br/>x, x_dot"]
+  D --> B
+  C --> E["Contact Model<br/>Hole/Peg Geometry + Penalty Forces"]
+  E --> C
+  C --> F["Logger/Metrics<br/>Peak Force, Insertion Time, Success"]

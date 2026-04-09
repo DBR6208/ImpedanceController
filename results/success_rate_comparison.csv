@@ -1,0 +1,3 @@
+mode,trial_count,success_rate,peak_contact_force_mean_n,overshoot_mean_m,settling_time_mean_s
+stiff,4.0,0.0,56.96319305036369,0.001131079987522012,nan
+impedance,4.0,1.0,36.530967239878095,9.737781799040165e-05,0.3962500000000003

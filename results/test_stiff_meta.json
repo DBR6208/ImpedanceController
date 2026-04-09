@@ -1,0 +1,59 @@
+{
+  "summary": {
+    "mode": "stiff",
+    "success": false,
+    "final_time_s": 1.9999999999998905,
+    "insertion_time_s": null,
+    "peak_contact_force_n": 215.2151092851413,
+    "max_lateral_error_m": 6.837280669330561e-05,
+    "seed": 7
+  },
+  "config": {
+    "mode": "stiff",
+    "duration_s": 2.0,
+    "dt_s": 0.001,
+    "seed": 7,
+    "noise_std_n": 0.0,
+    "initial_position_m": [
+      0.0016,
+      0.0,
+      0.02
+    ],
+    "initial_velocity_mps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "target_xy_m": [
+      0.0016,
+      0.0
+    ],
+    "stiffness_scale": 1.0,
+    "damping_scale": 1.0
+  },
+  "csv_columns": [
+    "t_s",
+    "mode",
+    "success",
+    "in_contact",
+    "x_m",
+    "y_m",
+    "z_m",
+    "vx_mps",
+    "vy_mps",
+    "vz_mps",
+    "x_ref_m",
+    "y_ref_m",
+    "z_ref_m",
+    "lateral_error_m",
+    "control_fx_n",
+    "control_fy_n",
+    "control_fz_n",
+    "contact_fx_n",
+    "contact_fy_n",
+    "contact_fz_n",
+    "contact_force_n",
+    "total_force_n",
+    "penetration_m"
+  ]
+}
