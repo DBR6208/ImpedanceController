@@ -1,23 +1,26 @@
 # Impedance-Controlled Peg Alignment Demo
-MIT-style robotics control demo with a Python simulation backend and a Vite + Three.js interactive frontend.
+A compact robotics control demo with a Python simulation backend and a Vite + Three.js interactive frontend.
 
 Core insight in under 10 seconds:
 
 > Stiff position control collides and spikes force, while impedance control absorbs contact, self-centers, and inserts.
 
 ## Why this project
-This repo is a compact research-artifact style demonstration of Week 6 robotic control ideas:
+This repo is a compact research-artifact-style demonstration of Week 6 robotic control ideas:
 - impedance control versus stiff position control
 - contact transition behavior
 - compliance and self-alignment under uncertainty
 - quantitative robustness via sweeps and heatmaps
 
 ## Spring-Mass-Damper Formulation
-This demo is directly built around the task-space impedance law:
+This demo is built around the task-space impedance law used by the simulation/controller code:
 
 ```text
-M * x_ddot + D * (x_dot - x_ref_dot) + K * (x - x_ref) = F_contact
+M * x_ddot + D * x_dot + K * (x - x_ref) = F_contact + w
 ```
+
+In classic form this is often written with velocity error `D * (x_dot - x_ref_dot)`.
+In this implementation, `x_ref_dot` is not explicitly used in the control law, so damping is applied to `x_dot`.
 
 Where:
 - `x` is peg lateral position (alignment state), `x_ref` is the insertion reference path
@@ -25,12 +28,13 @@ Where:
 - `D` is damping (energy dissipation during contact)
 - `K` is stiffness (restoring spring behavior)
 - `F_contact` is the hole wall/rim reaction force
+- `w` is an optional disturbance/noise force term
 
-How this maps to the demo behavior:
+How this maps to the observed behavior:
 - `stiff` baseline uses high effective stiffness and low compliance, so small offsets produce force spikes and collision-heavy behavior
 - `impedance` uses compliant `K,D` tuning, so contact is absorbed, the peg slides to center, and insertion succeeds more reliably
 
-Where to verify in this repo:
+Where to verify this in the repo:
 - control + dynamics code: `simulation/controller.py`, `simulation/plant.py`
 - quantitative evidence: `results/phase4_validation.json`, `plots/force_vs_time.png`, `plots/displacement_vs_time.png`
 - visual evidence: split-screen frontend replay (stiff vs impedance) in `web/`
@@ -103,7 +107,7 @@ How to use this workflow:
 5. If you want frontend plots updated from latest data, run:
 `python -m experiments.prepare_web_data --force-benchmark`
 
-Main outputs from benchmark workflow:
+Main outputs from the benchmark workflow:
 - `results/stiffness_sweep.csv`
 - `results/damping_sweep.csv`
 - `results/offset_robustness.csv`
@@ -144,6 +148,7 @@ impedance-contrller/
 |- docs/
 `- notebooks/
 ```
+
 ## Week 6 linkage
 - spring-mass-damper impedance law in task space
 - contact as an external interaction wrench/force

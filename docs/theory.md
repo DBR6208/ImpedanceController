@@ -23,6 +23,14 @@ The commanded task-space dynamics follow a diagonal spring-mass-damper structure
 M * x_ddot + D * x_dot + K * (x - x_ref) = F_contact + w
 ```
 
+Equivalent textbook form:
+
+```text
+M * x_ddot + D * (x_dot - x_ref_dot) + K * (x - x_ref) = F_contact + w
+```
+
+This implementation uses the simplified damping term `D * x_dot` directly.
+
 where:
 - `x = [x, y, z]^T`: peg position
 - `x_ref`: insertion trajectory reference
@@ -60,12 +68,12 @@ Definitions:
 - radial penetration: `p_r = max(0, r - c)`
 - top-plane penetration: `p_z = max(0, z_plate - z)`
 
-When `p_r > 0` and `p_z > 0`, lateral inward force magnitude includes:
+When `p_r > 0` and `p_z > 0`, the lateral inward force magnitude includes:
 - radial stiffness term
 - radial damping term
 - extra centering term proportional to `p_r * p_z`
 
-That centering term emulates the "funnel/self-guiding" effect after rim contact.
+The centering term emulates the "funnel/self-guiding" effect after rim contact.
 
 A bottom-stop penalty is also applied near hole bottom depth.
 
@@ -92,7 +100,7 @@ sqrt(x^2 + y^2) <= alpha * c
 z <= z_plate - d_success
 ```
 
-Primary comparison metrics:
+Primary comparison metrics are:
 - peak contact force
 - insertion time (first success time)
 - success/failure rate across seeds
