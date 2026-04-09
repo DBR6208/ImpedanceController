@@ -12,6 +12,30 @@ This repo is a compact research-artifact style demonstration of Week 6 robotic c
 - compliance and self-alignment under uncertainty
 - quantitative robustness via sweeps and heatmaps
 
+## Spring-Mass-Damper Formulation (Grader Quick Check)
+This demo is directly built around the task-space impedance law:
+
+\[
+M\ddot{x} + D(\dot{x}-\dot{x}_{ref}) + K(x-x_{ref}) = F_{contact}
+\]
+
+Where:
+- `x` is peg lateral position (alignment state), `x_ref` is the insertion reference path
+- `M` is virtual mass (inertia shaping)
+- `D` is damping (energy dissipation during contact)
+- `K` is stiffness (restoring spring behavior)
+- `F_contact` is the hole wall/rim reaction force
+
+How this maps to the demo behavior:
+- `stiff` baseline uses high effective stiffness and low compliance, so small offsets produce force spikes and collision-heavy behavior
+- `impedance` uses compliant `K,D` tuning, so contact is absorbed, the peg slides to center, and insertion succeeds more reliably
+
+Where to verify in this repo:
+- control + dynamics code: `simulation/controller.py`, `simulation/plant.py`
+- quantitative evidence: `results/phase4_validation.json`, `plots/force_vs_time.png`, `plots/displacement_vs_time.png`
+- visual evidence: split-screen frontend replay (stiff vs impedance) in `web/`
+- deeper explanation: `docs/theory.md`
+
 ## Controller block diagram
 <p>
   <img src="./docs/assets/diagrams/controller_block.svg" alt="Controller block diagram" width="1100" />
