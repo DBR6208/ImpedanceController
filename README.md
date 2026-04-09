@@ -12,7 +12,7 @@ This repo is a compact research-artifact style demonstration of Week 6 robotic c
 - compliance and self-alignment under uncertainty
 - quantitative robustness via sweeps and heatmaps
 
-## Spring-Mass-Damper Formulation (Grader Quick Check)
+## Spring-Mass-Damper Formulation
 This demo is directly built around the task-space impedance law:
 
 ```text
@@ -116,7 +116,7 @@ Open and run:
 `notebooks/demo.ipynb`
 
 Notebook purpose:
-- gives a one-file, reproducible analysis path for recruiters/reviewers
+- gives a one-file, reproducible analysis path
 - regenerates canonical stiff vs impedance runs from backend code
 - reproduces key evidence plots (force, center error, top-down path) without the UI
 - serves as an audit trail that the visual story is backed by data
