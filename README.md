@@ -136,15 +136,14 @@ From `results/phase4_validation.json`:
 ## Repository layout
 ```text
 impedance-contrller/
-├── simulation/
-├── experiments/
-├── results/
-├── plots/
-├── web/
-├── docs/
-└── notebooks/
+|- simulation/
+|- experiments/
+|- results/
+|- plots/
+|- web/
+|- docs/
+`- notebooks/
 ```
-
 ## Week 6 linkage
 - spring-mass-damper impedance law in task space
 - contact as an external interaction wrench/force
@@ -160,3 +159,4 @@ impedance-contrller/
 - 6-DOF wrist impedance extension
 - nonlinear friction and hybrid motion-force switching
 - GLB/CAD realism upgrade for visualization phase 2
+
